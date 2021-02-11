@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <title>Rupi Or Not Rupi</title>
+        <style>
+            body {
+                font-family: Helvetica;
+            }
+
+            #header {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            h1 {
+                font-size: 44px;
+            }
+
+            @media (max-width: 500px) {
+              h1 {
+                font-size: 36px;
+              }
+            }
+
+            #content-wrapper {
+                max-width: 1340px;
+                margin: 0 auto;
+            }
+
+            #poem-container {
+                width: fit-content;
+                margin: 0 auto;
+            }
+
+            #answer-box {
+                text-align: center;
+                height: 200px;
+                display: none;
+            }
+
+
+
+            #answer {
+                margin-bottom: 20px;
+                font-size: 22px;
+            }
+
+            .buttons {
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                margin-top: 50px;
+            }
+
+
+            .buttons .btn-rupi {
+                float: left;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+            a#link {position: absolute; left: 20px; bottom: 10px; text-decoration: none; color: #555; font-weight: bold;}
+            /*------------------------------------------------------*/
+            /* BUTTONS */
+            /*------------------------------------------------------*/
+            .btn,
+            input[type="submit"]{
+                cursor: pointer;
+                border-radius: 0px;
+                text-decoration: none;
+                padding: 12px 18px;
+                font-size: 12px;
+                line-height: 19px;
+                text-transform: uppercase;
+                font-family: 'Montserrat', sans-serif; font-weight:400;
+                letter-spacing: 3px;
+                -webkit-transition: all .4s ease-in-out;
+                   -moz-transition: all .4s ease-in-out;
+                    -ms-transition: all .4s ease-in-out;
+                     -o-transition: all .4s ease-in-out;
+                        transition: all .4s ease-in-out;
+            }
+
+            .btn-mid {
+                border-radius: 0px;
+                text-decoration: none;
+                padding: 14px 21px;
+                font-size: 13px;
+                line-height: 25px;
+                text-transform: uppercase;
+                font-family: 'Montserrat', sans-serif; font-weight:400;
+                letter-spacing: 3px;
+                -webkit-transition: all .4s ease-in-out;
+                   -moz-transition: all .4s ease-in-out;
+                    -ms-transition: all .4s ease-in-out;
+                     -o-transition: all .4s ease-in-out;
+                        transition: all .4s ease-in-out;
+            }
+
+            .btn:hover,
+            input[type="submit"]:hover{
+                -webkit-transition: all .4s ease-in-out;
+                   -moz-transition: all .4s ease-in-out;
+                    -ms-transition: all .4s ease-in-out;
+                     -o-transition: all .4s ease-in-out;
+                        transition: all .4s ease-in-out;
+            }
+
+            .btn-dark,
+            input[type="submit"]{
+                border:solid 2px #1f1f1f;
+                background: transparent;
+                color: #1f1f1f;
+            }
+            .btn-dark:hover,
+            input[type="submit"]:hover,
+            .btn-dark.active{
+                border:solid 2px #1f1f1f;
+                background: #1f1f1f;
+                color: #fff;
+            }
+
+            .btn-color{
+                background: transparent;
+            }
+            .btn-color:hover{
+                color: #fff;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            <h1> RUPI OR NOT RUPI </h1>
+        </div>
+
+        <div id="content-wrapper">
+
+            <div id="poem-container">
+                <div id="poem" style="white-space: pre-line">
+                    {{poem}}
+                </div>
+            </div>
+
+            <div id="button-container" class="buttons">
+                <div id="guess-box">
+                    <a class="btn btn-dark btn-mid btn-rupi" id="rupi-button">Rupi</a>
+                    <a class="btn btn-dark btn-mid btn-rupi" id="not-rupi-button">Not Rupi</a>
+                </div>
+                <div id="answer-box">
+                    <div id="answer">
+                            Correct This Is A Rupi Original!
+                    </div>
+                    <a class="btn btn-dark btn-mid" id="new-poem-button">New Poem</a>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            let is_rupi = "{{ is_rupi }}" ;
+
+            if (is_rupi == "True") {
+                is_rupi = true;
+            } else {
+                is_rupi = false;
+            }
+
+            var rupiButtonElements = document.getElementsByClassName("btn-rupi");
+
+            var checkAnswer = function() {
+                var id = this.id;
+                let message = "";
+                if (id == "rupi-button" && is_rupi) {
+                    // correct this is Rupi
+                    message = "Correct, This is a Rupi Original!";
+                } else if (id == "not-rupi-button" && !is_rupi) {
+                    // correct this is not Rupi
+                    message = "Correct, You Spotted a Fake!";
+                } else if (id == "rupi-button" && !is_rupi) {
+                    // wrong this is not Rupi
+                    message = "Gotcha, This is not Rupi!";
+                } else {
+                    // wrong this is Rupi
+                    message = "Ohhh This one Actually is a Rupi Original...";
+                }
+
+                displayAnswer(message);
+            };
+
+            for (var i = 0; i < rupiButtonElements.length; i++) {
+                rupiButtonElements[i].addEventListener('click', checkAnswer, false);
+            }
+
+            function displayAnswer(message) {
+                var answer = document.getElementById("answer");
+                answer.innerHTML = message;
+
+                var answerBox = document.getElementById("answer-box");
+                var guessBox = document.getElementById("guess-box");
+                answerBox.style.display = "block";
+                guessBox.style.display = "none";
+
+            }
+
+            function getNewPoem(){
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/api/new-poem",
+                    dataType: "json",
+                    async: true,
+                    data: "",
+                    success: function (data) {
+
+                        console.log("success");
+
+                        document.getElementById("poem").innerHTML = data["poem"];
+                        is_rupi = data["is_rupi"];
+
+                        document.getElementById("answer-box").style.display = "none";
+                        document.getElementById("guess-box").style.display = "block";
+
+                    },
+                    error: function (result) {
+                    }
+                })
+            }
+
+            let newQuestionButton = document.getElementById("new-poem-button");
+            newQuestionButton.addEventListener('click', getNewPoem, false);
+
+        </script>
+    </body>
+</html>
