@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://helppie.me/widget.js?id=607c4ceb23cf00003641183d" defer></script>
         <title>Rupi Or Not Rupi</title>
         <style>
             body {
@@ -48,6 +49,11 @@
                 font-size: 22px;
             }
 
+            #helppie-container {
+                text-align: center;
+                margin-top: 80px;
+            }
+
             .buttons {
                 overflow: hidden;
                 display: flex;
@@ -58,8 +64,7 @@
 
             .buttons .btn-rupi {
                 float: left;
-                margin-right: 20px;
-                margin-bottom: 20px;
+                margin: 0 10px;
             }
             a#link {position: absolute; left: 20px; bottom: 10px; text-decoration: none; color: #555; font-weight: bold;}
             /*------------------------------------------------------*/
@@ -156,6 +161,10 @@
                     </div>
                     <a class="btn btn-dark btn-mid" id="new-poem-button">New Poem</a>
                 </div>
+            </div>
+
+            <div id="helppie-container">
+                <a open-helppie-widget class="btn btn-dark btn-mid" id="">Send User Feedback</a>
             </div>
 
         </div>
